@@ -1,9 +1,6 @@
 # Daily
 
-tg bot 触发不同的命令，将内容评论到对应 labels 的 issue。
-
-> [!NOTE]
-> 通过 issues 配合 labels 记录的想法和代码均来自[yihong0618/2023](https://github.com/yihong0618/2023)，感谢~~
+日常记录，tg bot 触发不同的命令，将内容评论到对应 labels 的 issue。
 
 ## 我的数字
 
@@ -25,5 +22,7 @@ tg bot 触发不同的命令，将内容评论到对应 labels 的 issue。
 
 ## 感谢
 
-* [yihong0618/2023: Another year](https://github.com/yihong0618/2023)
-* [如何用一个仓库记录自己的一年 · Issue #209 · yihong0618/gitblog](https://github.com/yihong0618/gitblog/issues/209)
+> [!NOTE]
+> 通过 issues 配合 labels 记录的想法和代码均来自: 
+> * [yihong0618/2023: Another year](https://github.com/yihong0618/2023)
+> * [如何用一个仓库记录自己的一年 · Issue #209 · yihong0618/gitblog](https://github.com/yihong0618/gitblog/issues/209)
