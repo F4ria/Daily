@@ -18,6 +18,7 @@ from config import (
     GithubWorkflow,
     MyClockIn,
     TelegramBotCommandInfo,
+    TelegramBotCommadMyNumberTodo,
 )
 
 from utils import (
@@ -32,6 +33,7 @@ from responder import (
     respond_clock_in_summary,
     respond_github_workflow,
     respond_daily,
+    respond_my_number_todo,
 )
 
 
@@ -47,6 +49,10 @@ def set_bot_commands(bot: TeleBot) -> None:
         ]
         + [BotCommand(cmd, val.get("desc")) for cmd, val in GithubWorkflow.items()]
         + [BotCommand(cmd, val.get("desc")) for cmd, val in MyClockIn.items()]
+        + [
+            BotCommand(cmd, val.get("desc"))
+            for cmd, val in TelegramBotCommadMyNumberTodo.items()
+        ]
         + [
             BotCommand(cmd, val.get("desc"))
             for cmd, val in TelegramBotCommandInfo.items()
@@ -150,6 +156,23 @@ def main():
             return
 
         respond_github_workflow(bot, message, gh_repo, task)
+
+    @bot.message_handler(commands=[k for k in TelegramBotCommadMyNumberTodo.keys()])
+    def my_number_todo_handler(message: Message):
+        cmd, cmd_text = extract_command(message, bot_name)
+        if cmd is None:
+            return
+
+        task: dict = TelegramBotCommadMyNumberTodo.get(cmd)
+        if task is None:
+            bot.reply_to(message, f"{task} config is not found.")
+            return
+
+        if not is_owner(message, task.get("allowed_user")):
+            telebot.logger.debug(f"For owner use only.({cmd})")
+            return
+
+        respond_my_number_todo(bot, message, gh_repo, gh_username)
 
     @bot.message_handler(commands=[k for k in MyNumber.keys()])
     def daily_handler(message: Message):

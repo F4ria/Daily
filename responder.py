@@ -1,5 +1,3 @@
-import os
-
 from github.ContentFile import ContentFile  # type: ignore
 from github.Issue import Issue  # type: ignore
 from github.IssueComment import IssueComment  # type: ignore
@@ -32,6 +30,47 @@ def respond_info(bot: TeleBot, message: Message) -> None:
         "chat_id": message.chat.id,
     }
     bot.reply_to(message, str(text))
+
+
+def get_my_number_dodo_msg(repo: Repository, github_name: str) -> str:
+    content_file_dict = dict()
+    for cf in repo.get_dir_contents(DataDir, ref=GithubWorkBranch):
+        content_file_dict.update({cf.name: cf})
+
+    resp_message = []
+    do_fmt = "☑{0}"
+    todo_fmt = "☐{0}"
+    for task, config in MyNumber.items():
+        if config.get("skip_readme"):
+            continue
+        desc: str = config.get("desc")
+        task_name = desc.split("_")[-1]
+
+        labels: list = config.get("label")
+        if labels is None:
+            resp_message.append(todo_fmt.format(task_name))
+            return
+
+        issues = repo.get_issues(labels=labels, creator=github_name)
+        if issues.totalCount <= 0:
+            resp_message.append(todo_fmt.format(task_name))
+            return
+
+        issue: Issue = issues[0]
+        today_utc = fmt_to_today_utc(TimeZone)
+
+        comments = issue.get_comments(since=today_utc)
+        my_comments = [c for c in comments if github_is_me(c, github_name)]
+        if len(my_comments) <= 0:
+            resp_message.append(todo_fmt.format(task_name))
+            continue
+
+        resp_message.append(do_fmt.format(task_name))
+
+    msg = "MyNumber Todo:\n"
+    msg += "\n".join(resp_message)
+
+    return msg
 
 
 def respond_daily(
@@ -87,6 +126,8 @@ def respond_daily(
     except Exception as e:
         bot.reply_to(message, f"create comment failed: {e}")
 
+    respond_my_number_todo(bot, message, repo, github_name)
+
 
 def respond_github_workflow(
     bot: TeleBot, message: Message, repo: Repository, task: dict
@@ -102,12 +143,19 @@ def respond_github_workflow(
         bot.reply_to(message, f"[action triggered] An error may have occurred: {e}")
 
 
+def respond_my_number_todo(
+    bot: TeleBot, message: Message, repo: Repository, github_name: str
+) -> None:
+    msg = get_my_number_dodo_msg(repo, github_name)
+    bot.send_message(message.chat.id, msg)
+
+
 def respond_clock_in(bot: TeleBot, message: Message, repo: Repository, clock_in: list):
-    resp_message = []
     content_file_dict = dict()
     for cf in repo.get_dir_contents(DataDir, ref=GithubWorkBranch):
         content_file_dict.update({cf.name: cf})
 
+    resp_message = []
     for tag in clock_in:
         config: dict = MyNumber.get(tag)
         if not config:

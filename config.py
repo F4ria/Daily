@@ -132,6 +132,13 @@ TelegramBotCommandInfo = {
     },
 }
 
+TelegramBotCommadMyNumberTodo = {
+    "todo_my_number": {
+        "desc": "todo list my number",
+        "allowed_user": BotOwner,
+    }
+}
+
 GithubReadmeComments = (
     "(<!--START_SECTION:{name}-->\n)(.*)(<!--END_SECTION:{name}-->\n)"
 )
