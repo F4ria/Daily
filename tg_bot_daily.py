@@ -41,7 +41,10 @@ telebot.logger.setLevel(logging.DEBUG)
 def set_bot_commands(bot: TeleBot) -> None:
     bot.delete_my_commands()
     bot.set_my_commands(
-        commands=[BotCommand(cmd, val.get("desc")) for cmd, val in MyNumber.items()]
+        commands=[
+            BotCommand(cmd, val.get("desc") + val.get("status_unit_str", ""))
+            for cmd, val in MyNumber.items()
+        ]
         + [BotCommand(cmd, val.get("desc")) for cmd, val in GithubWorkflow.items()]
         + [BotCommand(cmd, val.get("desc")) for cmd, val in MyClockIn.items()]
         + [
