@@ -123,10 +123,11 @@ def respond_daily(
     try:
         issue.create_comment(body=cmd_text)
         bot.reply_to(message, "create comment success.")
+        if not task.get("skip_readme"):
+            respond_my_number_todo(bot, message, repo, github_name)
     except Exception as e:
         bot.reply_to(message, f"create comment failed: {e}")
 
-    respond_my_number_todo(bot, message, repo, github_name)
 
 
 def respond_github_workflow(
