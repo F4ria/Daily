@@ -7,19 +7,19 @@
 <!--START_SECTION:my_number-->
 | Name | Status | Start Day | Latest Day | Win Days | Longest Streak |
 | :---: | :---: | :---: | :---: | :---: | :---: |
-| [英语单词](https://github.com/F4ria/Daily/issues/5) | - | 2022-10-07 | 2023-11-23 | 412 | 208 | <!-- 2022-10-07 to 2023-05-02 --> 
-| [俯卧撑](https://github.com/F4ria/Daily/issues/3) | 14425(个) | 2022-10-07 | 2023-11-23 | 405 | 105 | <!-- 2022-10-07 to 2023-01-19 --> 
-| [英语跟读](https://github.com/F4ria/Daily/issues/6) | - | 2022-11-06 | 2023-11-23 | 364 | 89 | <!-- 2023-01-28 to 2023-04-26 --> 
-| [深蹲](https://github.com/F4ria/Daily/issues/2) | 9400(个) | 2023-01-05 | 2023-11-23 | 306 | 62 | <!-- 2023-01-27 to 2023-03-29 --> 
-| [仰卧起坐](https://github.com/F4ria/Daily/issues/4) | 8730(个) | 2023-01-31 | 2023-11-23 | 284 | 58 | <!-- 2023-01-31 to 2023-03-29 --> 
-| [平板支撑](https://github.com/F4ria/Daily/issues/1) | 558(分钟) | 2023-02-10 | 2023-11-23 | 274 | 54 | <!-- 2023-10-01 to 2023-11-23 --> 
+| [英语单词](https://github.com/F4ria/Daily/issues/5) | - | 2022-10-07 | 2023-11-24 | 413 | 208 | <!-- 2022-10-07 to 2023-05-02 --> 
+| [俯卧撑](https://github.com/F4ria/Daily/issues/3) | 14485(个) | 2022-10-07 | 2023-11-24 | 406 | 105 | <!-- 2022-10-07 to 2023-01-19 --> 
+| [英语跟读](https://github.com/F4ria/Daily/issues/6) | - | 2022-11-06 | 2023-11-24 | 365 | 89 | <!-- 2023-01-28 to 2023-04-26 --> 
+| [深蹲](https://github.com/F4ria/Daily/issues/2) | 9460(个) | 2023-01-05 | 2023-11-24 | 307 | 62 | <!-- 2023-01-27 to 2023-03-29 --> 
+| [仰卧起坐](https://github.com/F4ria/Daily/issues/4) | 8790(个) | 2023-01-31 | 2023-11-24 | 285 | 58 | <!-- 2023-01-31 to 2023-03-29 --> 
+| [平板支撑](https://github.com/F4ria/Daily/issues/1) | 561(分钟) | 2023-02-10 | 2023-11-24 | 275 | 55 | <!-- 2023-10-01 to 2023-11-24 --> 
 
 <!--END_SECTION:my_number-->
 
 ## [跑步](https://github.com/F4ria/Daily/issues/10)
 
 <!--START_SECTION:running-->
-![](https://github.com/F4ria/running_page/blob/run/assets/github.svg?raw=true)
+<img src="https://github.com/F4ria/Daily/blob/master/data/images/running/20231124-174509-91_weeks.jpg" width="35%">
 <!--END_SECTION:running-->
 
 ## 感谢
