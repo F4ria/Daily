@@ -18,7 +18,7 @@
 
 ## [跑步](https://github.com/F4ria/Daily/issues/10)
 
-<!--END_SECTION:running-->
+<!--START_SECTION:running-->
 ![](https://github.com/F4ria/running_page/blob/run/assets/github.svg?raw=true)
 <!--END_SECTION:running-->
 

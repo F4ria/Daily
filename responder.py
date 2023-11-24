@@ -236,6 +236,11 @@ def respond_running(
     cmd,
     cmd_text: str,
 ):
+    need_comment = False
+    if cmd_text.startswith("comment"):
+        need_comment = True
+        cmd_text = cmd_text[len("comment") :].strip()
+
     labels: list = task.get("label")
     if labels is None:
         bot.reply_to(message, f"labels empty.")
@@ -287,11 +292,10 @@ def respond_running(
         bot.reply_to(message, msg)
         return
 
-    if not cmd_text.startswith("comment"):
+    if not need_comment:
         bot.reply_to(message, "upload image finished")
         return
 
-    cmd_text = cmd_text[len("comment") :].strip()
     # <img src="https://github.com/F4ria/Daily/blob/master/data/images/running/20231124-161445-91_weeks.jpg?raw=true" width="35%">
     # ![](https://github.com/F4ria/Daily/blob/master/data/images/running/20231124-161445-91_weeks.jpg?raw=true)
     image_url_for_issue = f"{GithubFileAbsPath}/{file_name}?raw=true"
