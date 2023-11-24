@@ -1,13 +1,23 @@
 GithubName = "F4ria"
+GithubEmail = "f4riacool@gmail.com"
 GithubRepo = "Daily"
 GithubRepoName = f"{GithubName}/{GithubRepo}"
 GithubWorkBranch = "master"
 
+GithubCommitter = {
+    "name": GithubName,
+    "email": GithubEmail,
+}
+
 BotOwner = [728177711]
 
 TimeZone = "Asia/Shanghai"
-DataDir = "data"
+
 MyNumberFilenameFormat = f"{{desc}}.txt"
+DataDir = "data"
+GithubFileAbsPath = (
+    f"https://github.com/{GithubName}/{GithubRepo}/blob/{GithubWorkBranch}"
+)
 
 IssuePlankLabels = ["plank exercise"]
 IssueSquatLabels = ["squat"]
@@ -18,6 +28,7 @@ IssueEnglishShadowingLabels = ["English shadowing"]
 IssueSkippingRopeLabels = ["skipping rope"]
 IssueBurpeeLabels = ["burpee"]
 IssueOhMyGodLabels = ["oh my god"]
+IssueRunningLabels = ["running"]
 
 
 def sum_items(items: list) -> int:
@@ -89,6 +100,16 @@ MyNumber = {
         "allowed_user": BotOwner,
         "desc": "oh_my_god",
         "label": IssueOhMyGodLabels,
+        "skip_readme": True,
+    },
+}
+
+RunningPhoto = {
+    "running": {
+        "allowed_user": BotOwner,
+        "desc": "image for running or running comment xx weeks",
+        "label": IssueRunningLabels,
+        "path": f"{DataDir}/images/running",
         "skip_readme": True,
     },
 }

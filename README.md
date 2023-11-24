@@ -18,7 +18,7 @@
 
 ## 跑步
 
-![](https://raw.githubusercontent.com/F4ria/running_page/run/assets/github.svg)
+![](https://github.com/F4ria/running_page/blob/run/assets/github.svg?raw=true)
 
 ## 感谢
 

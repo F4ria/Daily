@@ -3,3 +3,4 @@ pyTelegramBotAPI
 PyGithub
 toml
 pendulum
+requests

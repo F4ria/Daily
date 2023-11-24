@@ -19,12 +19,14 @@ from config import (
     MyClockIn,
     TelegramBotCommandInfo,
     TelegramBotCommadMyNumberTodo,
+    RunningPhoto,
 )
 
 from utils import (
     sha256_hash,
     is_owner,
     extract_command,
+    extract_photo_command,
 )
 
 from responder import (
@@ -34,6 +36,7 @@ from responder import (
     respond_github_workflow,
     respond_daily,
     respond_my_number_todo,
+    respond_running,
 )
 
 
@@ -57,6 +60,7 @@ def set_bot_commands(bot: TeleBot) -> None:
             BotCommand(cmd, val.get("desc"))
             for cmd, val in TelegramBotCommandInfo.items()
         ]
+        + [BotCommand(cmd, val.get("desc")) for cmd, val in RunningPhoto.items()]
     )
 
 
@@ -194,6 +198,28 @@ def main():
             return
 
         respond_daily(bot, message, gh_repo, gh_username, task, cmd_text)
+
+    @bot.message_handler(commands=[k for k in RunningPhoto.keys()])
+    @bot.message_handler(content_types=["photo"])
+    def running_handler(message: Message) -> None:
+        cmd, cmd_text = extract_photo_command(message, bot_name)
+        if cmd is None:
+            return
+
+        if not cmd_text:
+            bot.reply_to(message, "caption is empty.")
+            return
+
+        task: dict = RunningPhoto.get(cmd)
+        if task is None:
+            bot.reply_to(message, f"{task} config is not found.")
+            return
+
+        if not is_owner(message, task.get("allowed_user")):
+            telebot.logger.debug(f"For owner use only.({cmd})")
+            return
+
+        respond_running(bot, message, gh_repo, gh_username, task, cmd, cmd_text)
 
     if not use_webhook:
         bot.remove_webhook()

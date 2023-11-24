@@ -109,6 +109,21 @@ def extract_command(message: Message, bot_name="") -> (str, str):
     return cmd.strip().lstrip("/"), cmd_text.strip()
 
 
+def extract_photo_command(message: Message, bot_name="") -> (str, str):
+    s = message.text or message.caption
+    cmd = s.split()[0]
+    cmd_text = s[len(cmd) :].strip()
+    if "@" in cmd:
+        cmd_at = "".join(cmd.split("@")[1:])
+        cmd = cmd.split("@")[0]
+
+        if cmd_at != bot_name:
+            return None, None
+
+    # return cmd.strip().lstrip("/"), cmd_at.strip(), cmd_text.strip()
+    return cmd.strip().lstrip("/"), cmd_text.strip()
+
+
 def replace_readme_comments(file_name, comment_str, comments_name):
     with open(file_name, "r+") as f:
         text = f.read()

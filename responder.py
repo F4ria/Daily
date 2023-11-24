@@ -1,7 +1,11 @@
+import pendulum
+import requests
+
 from github.ContentFile import ContentFile  # type: ignore
 from github.Issue import Issue  # type: ignore
 from github.IssueComment import IssueComment  # type: ignore
 from github.Repository import Repository
+from github.InputGitAuthor import InputGitAuthor
 from telebot import TeleBot  # type: ignore
 from telebot.types import Message  # type: ignore
 
@@ -11,6 +15,8 @@ from config import (
     MyNumberFilenameFormat,
     GithubWorkBranch,
     TimeZone,
+    GithubCommitter,
+    GithubFileAbsPath,
 )
 
 from utils import (
@@ -129,7 +135,6 @@ def respond_daily(
         bot.reply_to(message, f"create comment failed: {e}")
 
 
-
 def respond_github_workflow(
     bot: TeleBot, message: Message, repo: Repository, task: dict
 ) -> None:
@@ -220,3 +225,82 @@ def respond_clock_in_summary(
         msg += resp_template.format(**stat)
 
     bot.reply_to(message, msg)
+
+
+def respond_running(
+    bot: TeleBot,
+    message: Message,
+    repo: Repository,
+    github_name: str,
+    task: dict,
+    cmd,
+    cmd_text: str,
+):
+    labels: list = task.get("label")
+    if labels is None:
+        bot.reply_to(message, f"labels empty.")
+        return
+
+    issues = repo.get_issues(labels=labels, creator=github_name)
+    if issues.totalCount <= 0:
+        bot.reply_to(message, f"No issue found associated with the label({labels}).")
+        return
+    issue: Issue = issues[0]
+    if message.photo is None:
+        try:
+            issue.create_comment(cmd_text)
+            bot.reply_to(message, "create comment success.")
+        except Exception as e:
+            bot.reply_to(message, f"create comment failed: {e}")
+        return
+
+    now = pendulum.now(tz=TimeZone)
+
+    repo_rel_path = task.get("path")
+
+    high_photo = None
+    high_file_size = 0
+    for photo in message.photo:
+        if photo.file_size > high_file_size:
+            high_photo = photo
+    high_file_path = bot.get_file(high_photo.file_id).file_path
+    url = "https://api.telegram.org/file/bot{0}/{1}".format(bot.token, high_file_path)
+    file_type = url.split(".")[-1]
+    file_name = f"{repo_rel_path}/{now.format('YYYYMMDD-HHmmss')}-{cmd_text.replace(' ', '_')}.{file_type}"
+
+    image_resp = requests.get(url=url)
+    if not image_resp.ok:
+        msg = f"download image from tg failed: {image_resp.status_code}"
+        bot.reply_to(message, msg)
+        return
+
+    try:
+        result = repo.create_file(
+            path=file_name,
+            message=f"chore: add {cmd} image",
+            content=image_resp.content,
+            committer=InputGitAuthor(**GithubCommitter),
+            branch=GithubWorkBranch,
+        )
+    except Exception as e:
+        msg = "create file failed."
+        bot.reply_to(message, msg)
+        return
+
+    if not cmd_text.startswith("comment"):
+        bot.reply_to(message, "upload image finished")
+        return
+
+    cmd_text = cmd_text[len("comment") :]
+    # <img src="https://github.com/F4ria/Daily/blob/master/data/images/running/20231124-161445-91_weeks.jpg?raw=true" width="35%">
+    # ![](https://github.com/F4ria/Daily/blob/master/data/images/running/20231124-161445-91_weeks.jpg?raw=true)
+    image_url_for_issue = f"{GithubFileAbsPath}/{file_name}?raw=true"
+    image_url_for_issue_html = f'<img src="{image_url_for_issue}" width="35%">'
+    issue_content = f"{cmd_text}\n{image_url_for_issue_html}"
+    try:
+        issue.create_comment(issue_content)
+    except Exception as e:
+        msg = "upload image finished but create comment failed."
+        bot.reply_to(message, msg)
+        return
+    bot.reply_to(message, "upload image finished and create comment success.")
