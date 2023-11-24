@@ -291,7 +291,7 @@ def respond_running(
         bot.reply_to(message, "upload image finished")
         return
 
-    cmd_text = cmd_text[len("comment") :]
+    cmd_text = cmd_text[len("comment") :].strip()
     # <img src="https://github.com/F4ria/Daily/blob/master/data/images/running/20231124-161445-91_weeks.jpg?raw=true" width="35%">
     # ![](https://github.com/F4ria/Daily/blob/master/data/images/running/20231124-161445-91_weeks.jpg?raw=true)
     image_url_for_issue = f"{GithubFileAbsPath}/{file_name}?raw=true"

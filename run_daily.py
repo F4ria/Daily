@@ -1,15 +1,21 @@
 import argparse
 import os
+import re
 
 from github import Github
+from github.ContentFile import ContentFile  # type: ignore
 from github.Issue import Issue  # type: ignore
+
 
 from config import (
     MyNumber,
     DataDir,
+    GithubWorkBranch,
     MyNumberFilenameFormat,
     TimeZone,
     MyNumberHeader,
+    RunningPhoto,
+    GithubFileAbsPath,
 )
 
 from utils import (
@@ -28,7 +34,7 @@ from utils import (
 )
 
 
-def main(github_token: str, repo_name: str):
+def replace_my_number(github_token: str, repo_name: str):
     gh = Github(github_token)
     repo = gh.get_repo(repo_name)
     me = gh.get_user().login
@@ -110,6 +116,33 @@ def main(github_token: str, repo_name: str):
     replace_readme_comments("README.md", my_num_stat_str, "my_number")
 
 
+def replace_running(github_token: str, repo_name: str):
+    gh = Github(github_token)
+    repo = gh.get_repo(repo_name)
+
+    running = RunningPhoto.get("running")
+    if not running:
+        print("running is None.")
+        return
+
+    rel_path = running.get("path")
+
+    content_file_dict = dict()
+    for cf in repo.get_contents(rel_path, ref=GithubWorkBranch):
+        content_file_dict.update({cf.name: cf})
+
+    filenames = [i for i in content_file_dict.keys() if re.search(r"(\d+)_weeks*", i)]
+    if not filenames:
+        print("filenames is None.")
+
+    filename = sorted(filenames)[-1]
+    cf: ContentFile = content_file_dict.get(filename)
+    print(f"filename: {filename}, url: {cf.html_url}")
+
+    stat_str = f'<img src="{cf.html_url}" width="35%">'
+    replace_readme_comments("README.md", stat_str, "running")
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("github_token", help="github_token")
@@ -119,4 +152,5 @@ if __name__ == "__main__":
     if not os.path.exists(f"{DataDir}"):
         os.mkdir(f"{DataDir}")
 
-    main(options.github_token, options.repo_name)
+    replace_my_number(options.github_token, options.repo_name)
+    replace_running(options.github_token, options.repo_name)
