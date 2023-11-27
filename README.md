@@ -19,7 +19,7 @@
 ## [跑步](https://github.com/F4ria/Daily/issues/10)
 
 <!--START_SECTION:running-->
-<img src="https://github.com/F4ria/Daily/blob/master/data/images/running/20231124-174509-91_weeks.jpg" width="35%">
+<img src="https://github.com/F4ria/Daily/blob/master/data/images/running/20231127-221726-92_weeks.jpg" width="35%">
 <!--END_SECTION:running-->
 
 ## 感谢
