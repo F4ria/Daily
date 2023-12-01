@@ -263,13 +263,9 @@ def respond_running(
 
     repo_rel_path = task.get("path")
 
-    high_photo = None
-    high_file_size = 0
-    for photo in message.photo:
-        if photo.file_size > high_file_size:
-            high_photo = photo
-    high_file_path = bot.get_file(high_photo.file_id).file_path
-    url = "https://api.telegram.org/file/bot{0}/{1}".format(bot.token, high_file_path)
+    max_size_photo = max(message.photo, key=lambda p: p.file_size)
+    max_file_path = bot.get_file(max_size_photo.file_id).file_path
+    url = "https://api.telegram.org/file/bot{0}/{1}".format(bot.token, max_file_path)
     file_type = url.split(".")[-1]
     file_name = f"{repo_rel_path}/{now.format('YYYYMMDD-HHmmss')}-{cmd_text.replace(' ', '_')}.{file_type}"
 
