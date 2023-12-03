@@ -3,7 +3,7 @@ name: Run Daily
 on:
   workflow_dispatch:
   schedule:
-    - cron: "30 13 * * *"
+    - cron: "30 13 * * 3,0"
 
 env:
   GITHUB_NAME: F4ria
