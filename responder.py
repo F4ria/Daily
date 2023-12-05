@@ -292,8 +292,6 @@ def respond_running(
         bot.reply_to(message, "upload image finished")
         return
 
-    # <img src="https://github.com/F4ria/Daily/blob/master/data/images/running/20231124-161445-91_weeks.jpg?raw=true" width="35%">
-    # ![](https://github.com/F4ria/Daily/blob/master/data/images/running/20231124-161445-91_weeks.jpg?raw=true)
     image_url_for_issue = f"{GithubFileAbsPath}/{file_name}?raw=true"
     image_url_for_issue_html = f'<img src="{image_url_for_issue}" width="35%">'
     issue_content = f"{cmd_text}\n{image_url_for_issue_html}"
