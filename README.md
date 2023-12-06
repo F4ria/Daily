@@ -7,19 +7,19 @@
 <!--START_SECTION:my_number-->
 | Name | Status | Start Day | Latest Day | Win Days | Longest Streak |
 | :---: | :---: | :---: | :---: | :---: | :---: |
-| [英语单词](https://github.com/F4ria/Daily/issues/5) | - | 2022-10-07 | 2023-12-05 | 424 | 216 | <!-- 2023-05-04 to 2023-12-05 --> 
-| [俯卧撑](https://github.com/F4ria/Daily/issues/3) | 15155(个) | 2022-10-07 | 2023-12-05 | 417 | 105 | <!-- 2022-10-07 to 2023-01-19 --> 
-| [英语跟读](https://github.com/F4ria/Daily/issues/6) | - | 2022-11-06 | 2023-12-05 | 376 | 89 | <!-- 2023-01-28 to 2023-04-26 --> 
-| [深蹲](https://github.com/F4ria/Daily/issues/2) | 10110(个) | 2023-01-05 | 2023-12-05 | 318 | 66 | <!-- 2023-10-01 to 2023-12-05 --> 
-| [仰卧起坐](https://github.com/F4ria/Daily/issues/4) | 9430(个) | 2023-01-31 | 2023-12-05 | 296 | 66 | <!-- 2023-10-01 to 2023-12-05 --> 
-| [平板支撑](https://github.com/F4ria/Daily/issues/1) | 594(分钟) | 2023-02-10 | 2023-12-05 | 286 | 66 | <!-- 2023-10-01 to 2023-12-05 --> 
+| [英语单词](https://github.com/F4ria/Daily/issues/5) | - | 2022-10-07 | 2023-12-06 | 425 | 217 | <!-- 2023-05-04 to 2023-12-06 --> 
+| [俯卧撑](https://github.com/F4ria/Daily/issues/3) | 15230(个) | 2022-10-07 | 2023-12-06 | 418 | 105 | <!-- 2022-10-07 to 2023-01-19 --> 
+| [英语跟读](https://github.com/F4ria/Daily/issues/6) | - | 2022-11-06 | 2023-12-06 | 377 | 89 | <!-- 2023-01-28 to 2023-04-26 --> 
+| [深蹲](https://github.com/F4ria/Daily/issues/2) | 10170(个) | 2023-01-05 | 2023-12-06 | 319 | 67 | <!-- 2023-10-01 to 2023-12-06 --> 
+| [仰卧起坐](https://github.com/F4ria/Daily/issues/4) | 9490(个) | 2023-01-31 | 2023-12-06 | 297 | 67 | <!-- 2023-10-01 to 2023-12-06 --> 
+| [平板支撑](https://github.com/F4ria/Daily/issues/1) | 597(分钟) | 2023-02-10 | 2023-12-06 | 287 | 67 | <!-- 2023-10-01 to 2023-12-06 --> 
 
 <!--END_SECTION:my_number-->
 
 ## [跑步](https://github.com/F4ria/Daily/issues/10)
 
 <!--START_SECTION:running-->
-<img src="https://github.com/F4ria/Daily/blob/master/data/images/running/20231127-221726-92_weeks.jpg" width="35%">
+<img src="https://github.com/F4ria/Daily/blob/master/data/images/running/20231205-221706-93_weeks.jpg" width="35%">
 <!--END_SECTION:running-->
 
 ## 感谢
