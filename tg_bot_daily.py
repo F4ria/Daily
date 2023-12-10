@@ -138,11 +138,10 @@ def main():
             telebot.logger.debug(f"For owner use only.({cmd})")
             return
 
-        if cmd == "clock_in":
-            respond_clock_in(bot, message, gh_repo, task.get("number_names"))
-            return
-
         respond_clock_in_summary(bot, message, gh_repo, task.get("number_names"))
+
+        clock_in_for_me = ["eng_vocabulary", "push_up", "eng_shadowing"]
+        respond_clock_in(bot, message, gh_repo, clock_in_for_me)
 
     @bot.message_handler(commands=[k for k in GithubWorkflow.keys()])
     def github_workflow_handler(message: Message):

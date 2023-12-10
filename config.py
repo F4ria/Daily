@@ -135,14 +135,9 @@ GithubWorkflow = {
 
 # bot command
 MyClockIn = {
-    "clock_in": {
-        "allowed_user": BotOwner,
-        "desc": "clock-in(打卡)",
-        "number_names": ["eng_vocabulary", "push_up", "eng_shadowing"],
-    },
     "clock_in_summary": {
         "allowed_user": BotOwner,
-        "desc": "clock-in summary",
+        "desc": "clock-in(打卡) summary",
         "number_names": MyNumber.keys(),
     },
 }
