@@ -30,6 +30,14 @@ def fmt_utc_to_date_str(ts: str, tz: str) -> str:
     return s
 
 
+def days_until_today(start_date):
+    today = pendulum.today()
+    start = pendulum.parse(start_date)
+
+    diff = today.diff(start)
+    return diff.in_days() + 1
+
+
 def github_is_me(comment: IssueComment, me):
     return comment.user.login == me
 

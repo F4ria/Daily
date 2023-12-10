@@ -25,6 +25,7 @@ from utils import (
     list_to_dict,
     fmt_to_today_utc,
     fmt_utc_to_datetime_str,
+    days_until_today,
     github_is_me,
 )
 
@@ -189,7 +190,7 @@ def respond_clock_in_summary(
     bot: TeleBot, message: Message, repo: Repository, clock_in: list
 ):
     resp_list = []
-    resp_template = "{name}({start_day}): 打卡({win_days})天\n"
+    resp_template = "{name}({start_day}): 打卡({win_days})天, 未打卡({fail_days})天\n"
 
     content_file_dict = dict()
     for cf in repo.get_dir_contents(DataDir, ref=GithubWorkBranch):
@@ -213,10 +214,11 @@ def respond_clock_in_summary(
         data = read_str_as_dict(text)
 
         desc = config.get("desc")
-        stat: dict = list_to_dict(["name", "start_day", "win_days"])
+        stat: dict = list_to_dict(["name", "start_day", "win_days", "fail_days"])
         stat["name"] = desc.split("_")[-1]
         stat["start_day"] = list(sorted([i for i in data.keys()]))[0]
         stat["win_days"] = len(data)
+        stat["fail_days"] = days_until_today(stat["start_day"]) - stat["win_days"]
         resp_list.append(stat)
 
     msg = ""
