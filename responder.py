@@ -58,7 +58,7 @@ def get_my_number_dodo_msg(repo: Repository, github_name: str) -> str:
             resp_message.append(todo_fmt.format(task_name))
             return
 
-        issues = repo.get_issues(labels=labels, creator=github_name)
+        issues = repo.get_issues(labels=labels, state="all", creator=github_name)
         if issues.totalCount <= 0:
             resp_message.append(todo_fmt.format(task_name))
             return
@@ -93,7 +93,7 @@ def respond_daily(
         bot.reply_to(message, f"labels empty.")
         return
 
-    issues = repo.get_issues(labels=labels, creator=github_name)
+    issues = repo.get_issues(labels=labels, state="all", creator=github_name)
     if issues.totalCount <= 0:
         bot.reply_to(message, f"No issue found associated with the label({labels}).")
         return
@@ -248,7 +248,7 @@ def respond_running(
         bot.reply_to(message, f"labels empty.")
         return
 
-    issues = repo.get_issues(labels=labels, creator=github_name)
+    issues = repo.get_issues(labels=labels, state="all", creator=github_name)
     if issues.totalCount <= 0:
         bot.reply_to(message, f"No issue found associated with the label({labels}).")
         return

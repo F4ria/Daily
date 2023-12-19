@@ -50,7 +50,7 @@ def replace_my_number(github_token: str, repo_name: str):
 
         print(f"{k} processing {labels} ...")
 
-        issues = repo.get_issues(labels=labels, creator=me)
+        issues = repo.get_issues(labels=labels, state="all", creator=me)
         if issues.totalCount <= 0:
             print(f"No issue found associated with the label({labels}).")
             continue

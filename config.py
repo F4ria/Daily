@@ -28,6 +28,7 @@ IssueEnglishShadowingLabels = ["English shadowing"]
 IssueSkippingRopeLabels = ["skipping rope"]
 IssueBurpeeLabels = ["burpee"]
 IssueOhMyGodLabels = ["oh my god"]
+IssueOhMyGodDLabels = ["oh my god d"]
 IssueRunningLabels = ["running"]
 
 
@@ -100,6 +101,12 @@ MyNumber = {
         "allowed_user": BotOwner,
         "desc": "oh_my_god",
         "label": IssueOhMyGodLabels,
+        "skip_readme": True,
+    },
+    "oh_my_god_d": {
+        "allowed_user": BotOwner,
+        "desc": "oh_my_god_d",
+        "label": IssueOhMyGodDLabels,
         "skip_readme": True,
     },
 }
