@@ -39,47 +39,6 @@ def respond_info(bot: TeleBot, message: Message) -> None:
     bot.reply_to(message, str(text))
 
 
-def get_my_number_dodo_msg(repo: Repository, github_name: str) -> str:
-    content_file_dict = dict()
-    for cf in repo.get_dir_contents(DataDir, ref=GithubWorkBranch):
-        content_file_dict.update({cf.name: cf})
-
-    resp_message = []
-    do_fmt = "☑{0}"
-    todo_fmt = "☐{0}"
-    for task, config in MyNumber.items():
-        if config.get("skip_readme"):
-            continue
-        desc: str = config.get("desc")
-        task_name = desc.split("_")[-1]
-
-        labels: list = config.get("label")
-        if labels is None:
-            resp_message.append(todo_fmt.format(task_name))
-            return
-
-        issues = repo.get_issues(labels=labels, state="all", creator=github_name)
-        if issues.totalCount <= 0:
-            resp_message.append(todo_fmt.format(task_name))
-            return
-
-        issue: Issue = issues[0]
-        today_utc = fmt_to_today_utc(TimeZone)
-
-        comments = issue.get_comments(since=today_utc)
-        my_comments = [c for c in comments if github_is_me(c, github_name)]
-        if len(my_comments) <= 0:
-            resp_message.append(todo_fmt.format(task_name))
-            continue
-
-        resp_message.append(do_fmt.format(task_name))
-
-    msg = "MyNumber Todo:\n"
-    msg += "\n".join(resp_message)
-
-    return msg
-
-
 def respond_daily(
     bot: TeleBot,
     message: Message,
@@ -153,7 +112,47 @@ def respond_github_workflow(
 def respond_my_number_todo(
     bot: TeleBot, message: Message, repo: Repository, github_name: str
 ) -> None:
-    msg = get_my_number_dodo_msg(repo, github_name)
+    content_file_dict = dict()
+    for cf in repo.get_dir_contents(DataDir, ref=GithubWorkBranch):
+        content_file_dict.update({cf.name: cf})
+
+    resp_message = []
+    do_fmt = "☑{0}"
+    todo_fmt = "☐{0}"
+    for task, config in MyNumber.items():
+        if config.get("skip_readme"):
+            continue
+        desc: str = config.get("desc")
+        task_name = desc.split("_")[-1]
+
+        labels: list = config.get("label")
+        if labels is None:
+            resp_message.append(todo_fmt.format(task_name))
+            return
+
+        issues = repo.get_issues(labels=labels, state="all", creator=github_name)
+        if issues.totalCount <= 0:
+            resp_message.append(todo_fmt.format(task_name))
+            return
+
+        issue: Issue = issues[0]
+        today_utc = fmt_to_today_utc(TimeZone)
+
+        comments = issue.get_comments(since=today_utc)
+        my_comments = [c for c in comments if github_is_me(c, github_name)]
+        if len(my_comments) <= 0:
+            resp_message.append(todo_fmt.format(task_name))
+            continue
+
+        resp_message.append(do_fmt.format(task_name))
+
+    msg = f"{pendulum.today(tz=TimeZone).to_date_string()} MyNumber Todo:\n"
+    msg += "\n".join(resp_message)
+
+    msg += "\nexecute if complete:\n"
+    msg += "1. /run_daily\n"
+    msg += "2. /clock_in_summary\n"
+
     bot.send_message(message.chat.id, msg)
 
 
